@@ -1,0 +1,43 @@
+﻿@page "/"
+@using BlazorMovieSearchApp.Components
+@using Data;
+@inject MovieRepository repository
+
+<Search OnSearch="SearchAsync" />
+<p class="App-intro">Sharing a few of our favourite movies</p>
+<div class="movies">
+    @if (loading && string.IsNullOrEmpty(errorMessage))
+    {
+        <span>loading...</span>
+    }
+    else if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="errorMessage">@errorMessage</div>
+    }
+    else
+    {
+        @foreach (var movie in movies)
+        {
+            <Movie _Movie="movie" />
+        }
+    }
+</div>
+
+@code {
+    string errorMessage;
+    bool loading;
+    MovieModel[] movies { get; set; } = new MovieModel[] { };
+
+    protected override async Task OnInitializedAsync()
+        => await SearchAsync("man");
+
+    async ValueTask SearchAsync(string searchValue)
+    {
+        loading = true;
+        errorMessage = "";
+        try { movies = await repository.ListAsync(searchValue); }
+        catch (Exception e) { errorMessage = e.Message; }
+        loading = false;
+        StateHasChanged();
+    }
+}

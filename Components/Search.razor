@@ -1,0 +1,18 @@
+﻿<form class="search" onsubmit="return false">
+    <input @bind="@SearchValue" type="text" />
+    <input @onclick="async () => await HandleClickAsync()"
+           type="submit" value="SEARCH" />
+</form>
+
+@code {
+    string SearchValue { get; set; }
+
+    [Parameter]
+    public Func<string, ValueTask> OnSearch { get; set; }
+
+    async ValueTask HandleClickAsync()
+    {
+        await OnSearch(SearchValue);
+        SearchValue = "";
+    }
+}

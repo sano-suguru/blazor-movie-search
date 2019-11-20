@@ -1,0 +1,21 @@
+﻿@using Data
+
+<div class="movie">
+    <h2>@(_Movie.Title)</h2>
+    <div>
+        <img width="200"
+             alt='@($"The movie titled: {_Movie.Title}")'
+             src="@(Poster)" />
+    </div>
+    <p>(@_Movie.Year)</p>
+</div>
+
+@code {
+    const string DEFAULT_PLACEHOLDER_IMAGE =
+        "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg";
+
+    [Parameter]
+    public MovieModel _Movie { get; set; }
+
+    string Poster => (_Movie.Poster == "N/A") ? DEFAULT_PLACEHOLDER_IMAGE : _Movie.Poster;
+}
