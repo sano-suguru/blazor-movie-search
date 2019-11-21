@@ -1,6 +1,8 @@
 ﻿@page "/"
+
 @using BlazorMovieSearchApp.Components
 @using Data;
+
 @inject MovieRepository repository
 
 <Search OnSearch="SearchAsync" />
@@ -26,7 +28,7 @@
 @code {
     string errorMessage;
     bool loading;
-    MovieModel[] movies { get; set; } = new MovieModel[] { };
+    Data.Movie[] movies { get; set; } = new Data.Movie[] { };
 
     protected override async Task OnInitializedAsync()
         => await SearchAsync("man");

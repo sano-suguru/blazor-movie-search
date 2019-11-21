@@ -14,7 +14,7 @@ namespace BlazorMovieSearchApp.Data
         public MovieRepository(IHttpClientFactory factory)
             => _factory = factory;
 
-        public async ValueTask<MovieModel[]> ListAsync(string searchValue)
+        public async ValueTask<Movie[]> ListAsync(string searchValue)
         {
             HttpClient client = _factory.CreateClient();
             string json = await client.GetStringAsync(
@@ -29,7 +29,7 @@ namespace BlazorMovieSearchApp.Data
 
         class Rootobject
         {
-            public MovieModel[] Search { get; set; }
+            public Movie[] Search { get; set; }
             public string Response { get; set; }
             public string Error { get; set; }
         }
